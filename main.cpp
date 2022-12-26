@@ -23,7 +23,7 @@ int main() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 ticTacToeGame.runGame(event);
 
-                std::cout << "Kliknalem " << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
+                std::cout << "clicked " << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
             }
 
         }

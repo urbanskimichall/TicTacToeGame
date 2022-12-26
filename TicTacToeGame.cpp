@@ -71,7 +71,7 @@ void TicTacToeGame::runGame(sf::Event &event) {
 
             sectors[i].setImagePosition();
 
-            std::cout << "zjebalo sie " << i << std::endl;
+            std::cout << "doesntwork " << i << std::endl;
         }
         for (int j = 0; j < indexesForWinner.size(); ++j)
         {
