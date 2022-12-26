@@ -10,7 +10,7 @@ public:
     void initGameBoard();
     void initPredefinedSectors();
     void initSectors();
-    void runGame(sf::Event& event);
+    void runGame(sf::Event& event, sf::RenderWindow& window);
     void drawGameBoard(sf::RenderWindow& window);
 
 private:
@@ -19,6 +19,7 @@ private:
     void crossWin(int i, int j);
     bool isCrossWin(int j);
     bool isCircleWin(int j);
+    void playAgain(sf::RenderWindow& window, sf::Event &event);
 
     sf::Texture texture;
     sf::Texture texture1;

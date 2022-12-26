@@ -40,7 +40,7 @@ void TicTacToeGame::initSectors() {
     sectors[8] = {400, 400, sprite};
 }
 
-void TicTacToeGame::runGame(sf::Event &event) {
+void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
 
     for (int i{0}; i < sectors.size(); i++)
     {
@@ -60,10 +60,18 @@ void TicTacToeGame::runGame(sf::Event &event) {
             if (isCircleWin(j))
             {
                 circleWin(i,j);
+                drawGameBoard(window);
+                playAgain(window, event);
+                initPredefinedSectors();
+                initSectors();
             }
             else if (isCrossWin(j))
             {
                 crossWin(i,j);
+                drawGameBoard(window);
+                playAgain(window, event);
+                initPredefinedSectors();
+                initSectors();
             }
         }
     }
@@ -140,4 +148,32 @@ bool TicTacToeGame::isCircleWin(int j) {
     return sectors[indexesForWinner[j][0]].state == SectorState::CIRCLE &&
            sectors[indexesForWinner[j][1]].state == SectorState::CIRCLE &&
            sectors[indexesForWinner[j][2]].state == SectorState::CIRCLE;
+}
+
+void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
+    
+    sf::RectangleShape playAgainButton;
+    playAgainButton.setSize({400, 300});
+    playAgainButton.setFillColor({0,255,0});
+    playAgainButton.setPosition(100, 150);
+
+    window.draw(playAgainButton);
+    window.display();
+    bool isClicked{false};
+    while (window.isOpen())
+    {
+        while (window.pollEvent(event)) {
+            std::cout << "tuuu";
+            if (event.type == sf::Event::MouseButtonPressed &&
+                (event.mouseButton.x>=100 && event.mouseButton.x<=500 && event.mouseButton.y>=150 && event.mouseButton.y<=450) )
+            {
+                isClicked = true;
+            }
+        }
+        if(isClicked)
+        {
+            break;
+        }
+    }
+
 }
