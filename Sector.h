@@ -1,9 +1,9 @@
 #ifndef TIKTAKTOE_SECTOR_H
 #define TIKTAKTOE_SECTOR_H
 
-
 #include <SFML/Graphics/Sprite.hpp>
 #include "SectorState.h"
+
 class Sector
 {
 public:
@@ -17,9 +17,5 @@ public:
     void setImagePosition();
 
     SectorState state{SectorState::EMPTY};
-
-
 };
-
-
 #endif //TIKTAKTOE_SECTOR_H

@@ -1,5 +1,3 @@
-
-
 #ifndef SECTOR_H_TICTACTOEGAME_H
 #define SECTOR_H_TICTACTOEGAME_H
 #include <SFML/Graphics.hpp>
@@ -14,7 +12,14 @@ public:
     void initSectors();
     void runGame(sf::Event& event);
     void drawGameBoard(sf::RenderWindow& window);
+
 private:
+    void selectXOturn(int i);
+    void circleWin(int i, int j);
+    void crossWin(int i, int j);
+    bool isCrossWin(int j);
+    bool isCircleWin(int j);
+
     sf::Texture texture;
     sf::Texture texture1;
     sf::Texture texture2;
@@ -42,9 +47,5 @@ private:
 
     bool isPlayerXturn{true};
     bool isWinner{false};
-
-
 };
-
-
 #endif //SECTOR_H_TICTACTOEGAME_H

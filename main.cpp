@@ -11,8 +11,7 @@ int main() {
     ticTacToeGame.initGameBoard();
     ticTacToeGame.initPredefinedSectors();
     ticTacToeGame.initSectors();
-
-
+    
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
@@ -25,7 +24,6 @@ int main() {
 
                 std::cout << "clicked " << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
             }
-
         }
         window.clear();
         ticTacToeGame.drawGameBoard(window);

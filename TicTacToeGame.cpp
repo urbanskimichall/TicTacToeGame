@@ -16,8 +16,6 @@ void TicTacToeGame::initGameBoard() {
     sprite2.setTexture(texture2);
     sprite3.setTexture(texture3);
     sprite4.setTexture(texture4);
-
-
 }
 
 void TicTacToeGame::initPredefinedSectors() {
@@ -27,7 +25,6 @@ void TicTacToeGame::initPredefinedSectors() {
     predefinedSectors.emplace_back(0, 0, sprite2);
     predefinedSectors.emplace_back(0, 0, sprite3);
     predefinedSectors.emplace_back(0, 0, sprite4);
-
 }
 
 void TicTacToeGame::initSectors() {
@@ -41,7 +38,6 @@ void TicTacToeGame::initSectors() {
     sectors[6] = {0, 400, sprite};
     sectors[7] = {200, 400, sprite};
     sectors[8] = {400, 400, sprite};
-
 }
 
 void TicTacToeGame::runGame(sf::Event &event) {
@@ -52,21 +48,7 @@ void TicTacToeGame::runGame(sf::Event &event) {
         {
             if (sectors[i].state == SectorState::EMPTY)
             {
-                if (isPlayerXturn)
-                {
-                    predefinedSectors[2].xCordinate = sectors[i].xCordinate;
-                    predefinedSectors[2].yCordinate = sectors[i].yCordinate;
-                    sectors[i] = predefinedSectors[2];
-                    sectors[i].state = SectorState::CROSS;
-                    isPlayerXturn = false;
-                } else
-                {
-                    predefinedSectors[1].xCordinate = sectors[i].xCordinate;
-                    predefinedSectors[1].yCordinate = sectors[i].yCordinate;
-                    sectors[i] = predefinedSectors[1];
-                    sectors[i].state = SectorState::CIRCLE;
-                    isPlayerXturn = true;
-                }
+                selectXOturn(i);
             }
 
             sectors[i].setImagePosition();
@@ -75,47 +57,16 @@ void TicTacToeGame::runGame(sf::Event &event) {
         }
         for (int j = 0; j < indexesForWinner.size(); ++j)
         {
-
-            if (sectors[indexesForWinner[j][0]].state == SectorState::CIRCLE &&
-                sectors[indexesForWinner[j][1]].state == SectorState::CIRCLE &&
-                sectors[indexesForWinner[j][2]].state == SectorState::CIRCLE)
+            if (isCircleWin(j))
             {
-                isWinner = true;
-                predefinedSectors[4].xCordinate = sectors[i].xCordinate;
-                predefinedSectors[4].yCordinate = sectors[i].yCordinate;
-                sectors[i] = predefinedSectors[4];
-
-                sectors[indexesForWinner[j][0]].sprite = sprite4;
-                sectors[indexesForWinner[j][0]].setImagePosition();
-                sectors[indexesForWinner[j][1]].sprite = sprite4;
-                sectors[indexesForWinner[j][1]].setImagePosition();
-                sectors[indexesForWinner[j][2]].sprite = sprite4;
-                sectors[indexesForWinner[j][2]].setImagePosition();
-                std::cout << "Circle win " << std::endl;
-
+                circleWin(i,j);
             }
-            else if (sectors[indexesForWinner[j][0]].state == SectorState::CROSS &&
-                       sectors[indexesForWinner[j][1]].state == SectorState::CROSS &&
-                       sectors[indexesForWinner[j][2]].state == SectorState::CROSS)
+            else if (isCrossWin(j))
             {
-                isWinner = true;
-                predefinedSectors[3].xCordinate = sectors[i].xCordinate;
-                predefinedSectors[3].yCordinate = sectors[i].yCordinate;
-                sectors[i] = predefinedSectors[3];
-
-                sectors[indexesForWinner[j][0]].sprite = sprite3;
-                sectors[indexesForWinner[j][0]].setImagePosition();
-                sectors[indexesForWinner[j][1]].sprite = sprite3;
-                sectors[indexesForWinner[j][1]].setImagePosition();
-                sectors[indexesForWinner[j][2]].sprite = sprite3;
-                sectors[indexesForWinner[j][2]].setImagePosition();
-                std::cout << "Cross win " << std::endl;
-
+                crossWin(i,j);
             }
-
         }
     }
-
 }
 
 void TicTacToeGame::drawGameBoard(sf::RenderWindow &window) {
@@ -123,5 +74,70 @@ void TicTacToeGame::drawGameBoard(sf::RenderWindow &window) {
     for (int i = 0; i < sectors.size(); i++) {
         window.draw(sectors[i].sprite);
     }
+}
 
+void TicTacToeGame::selectXOturn(int i) {
+
+    if (isPlayerXturn)
+    {
+        predefinedSectors[2].xCordinate = sectors[i].xCordinate;
+        predefinedSectors[2].yCordinate = sectors[i].yCordinate;
+        sectors[i] = predefinedSectors[2];
+        sectors[i].state = SectorState::CROSS;
+        isPlayerXturn = false;
+    } else
+    {
+        predefinedSectors[1].xCordinate = sectors[i].xCordinate;
+        predefinedSectors[1].yCordinate = sectors[i].yCordinate;
+        sectors[i] = predefinedSectors[1];
+        sectors[i].state = SectorState::CIRCLE;
+        isPlayerXturn = true;
+    }
+
+}
+
+void TicTacToeGame::circleWin(int i, int j) {
+
+    isWinner = true;
+    predefinedSectors[4].xCordinate = sectors[i].xCordinate;
+    predefinedSectors[4].yCordinate = sectors[i].yCordinate;
+    sectors[i] = predefinedSectors[4];
+
+    sectors[indexesForWinner[j][0]].sprite = sprite4;
+    sectors[indexesForWinner[j][0]].setImagePosition();
+    sectors[indexesForWinner[j][1]].sprite = sprite4;
+    sectors[indexesForWinner[j][1]].setImagePosition();
+    sectors[indexesForWinner[j][2]].sprite = sprite4;
+    sectors[indexesForWinner[j][2]].setImagePosition();
+    std::cout << "Circle win " << std::endl;
+
+}
+
+void TicTacToeGame::crossWin(int i, int j) {
+    isWinner = true;
+    predefinedSectors[3].xCordinate = sectors[i].xCordinate;
+    predefinedSectors[3].yCordinate = sectors[i].yCordinate;
+    sectors[i] = predefinedSectors[3];
+
+    sectors[indexesForWinner[j][0]].sprite = sprite3;
+    sectors[indexesForWinner[j][0]].setImagePosition();
+    sectors[indexesForWinner[j][1]].sprite = sprite3;
+    sectors[indexesForWinner[j][1]].setImagePosition();
+    sectors[indexesForWinner[j][2]].sprite = sprite3;
+    sectors[indexesForWinner[j][2]].setImagePosition();
+    std::cout << "Cross win " << std::endl;
+
+}
+
+bool TicTacToeGame::isCrossWin(int j) {
+
+    return sectors[indexesForWinner[j][0]].state == SectorState::CROSS &&
+           sectors[indexesForWinner[j][1]].state == SectorState::CROSS &&
+           sectors[indexesForWinner[j][2]].state == SectorState::CROSS;
+}
+
+bool TicTacToeGame::isCircleWin(int j) {
+    return sectors[indexesForWinner[j][0]].state == SectorState::CIRCLE &&
+           sectors[indexesForWinner[j][1]].state == SectorState::CIRCLE &&
+           sectors[indexesForWinner[j][2]].state == SectorState::CIRCLE;
 }

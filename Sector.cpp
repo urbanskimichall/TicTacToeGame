@@ -2,7 +2,6 @@
 
 Sector::Sector(float xCord, float yCord, sf::Sprite s)
 {
-
     xCordinate = xCord;
     yCordinate = yCord;
     sprite = s;
@@ -16,7 +15,6 @@ bool Sector::isSectorClicked(float x, float y)
         return true;
     }
     else return false;
-
 }
 
 void Sector::setImagePosition()
