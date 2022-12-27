@@ -1,15 +1,12 @@
-
-
-
 #include "TicTacToeGame.h"
 
 void TicTacToeGame::initGameBoard() {
 
-    texture.loadFromFile("emptyField.jpg");
-    texture1.loadFromFile("circle.jpg");
-    texture2.loadFromFile("cross.jpg");
-    texture3.loadFromFile("winnerCross.jpg");
-    texture4.loadFromFile("winnerCircle.jpg");
+    texture.loadFromFile("../Pictures/emptyField.jpg");
+    texture1.loadFromFile("../Pictures/circle.jpg");
+    texture2.loadFromFile("../Pictures/cross.jpg");
+    texture3.loadFromFile("../Pictures/winnerCross.jpg");
+    texture4.loadFromFile("../Pictures/winnerCircle.jpg");
 
     sprite.setTexture(texture);
     sprite1.setTexture(texture1);
@@ -151,7 +148,7 @@ bool TicTacToeGame::isCircleWin(int j) {
 }
 
 void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
-    
+
     sf::RectangleShape playAgainButton;
     playAgainButton.setSize({400, 300});
     playAgainButton.setFillColor({0,255,0});
