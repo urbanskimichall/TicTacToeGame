@@ -35,6 +35,10 @@ void TicTacToeGame::initSectors() {
     sectors[6] = {0, 400, sprite};
     sectors[7] = {200, 400, sprite};
     sectors[8] = {400, 400, sprite};
+
+    isCrossWiner=false;
+    isCircleWiner=false;
+    isTieDetected=false;
 }
 
 void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
@@ -56,6 +60,7 @@ void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
         {
             if (isCircleWin(j))
             {
+                isCircleWiner = true;
                 circleWin(i,j);
                 drawGameBoard(window);
                 playAgain(window, event);
@@ -64,6 +69,7 @@ void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
             }
             else if (isCrossWin(j))
             {
+                isCrossWiner = true;
                 crossWin(i,j);
                 drawGameBoard(window);
                 playAgain(window, event);
@@ -73,6 +79,7 @@ void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
         }
         if(isTie())
         {
+            isTieDetected = true;
             drawGameBoard(window);
             playAgain(window, event);
             initPredefinedSectors();
@@ -105,7 +112,6 @@ void TicTacToeGame::selectXOturn(int i) {
         sectors[i].state = SectorState::CIRCLE;
         isPlayerXturn = true;
     }
-
 }
 
 void TicTacToeGame::circleWin(int i, int j) {
@@ -122,7 +128,6 @@ void TicTacToeGame::circleWin(int i, int j) {
     sectors[indexesForWinner[j][2]].sprite = sprite4;
     sectors[indexesForWinner[j][2]].setImagePosition();
     std::cout << "Circle win " << std::endl;
-
 }
 
 void TicTacToeGame::crossWin(int i, int j) {
@@ -138,7 +143,6 @@ void TicTacToeGame::crossWin(int i, int j) {
     sectors[indexesForWinner[j][2]].sprite = sprite3;
     sectors[indexesForWinner[j][2]].setImagePosition();
     std::cout << "Cross win " << std::endl;
-
 }
 
 bool TicTacToeGame::isCrossWin(int j) {
@@ -169,16 +173,30 @@ void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
 
     sf::RectangleShape playAgainButton;
     playAgainButton.setSize({400, 300});
-    playAgainButton.setFillColor({0,255,0});
+    playAgainButton.setFillColor({50,255,100});
     playAgainButton.setPosition(100, 150);
+    playAgainButton.setOutlineThickness(3);
+    playAgainButton.setOutlineColor({50,20,100});
 
     window.draw(playAgainButton);
+    if(isCrossWiner)
+    {
+        printCrossWin(window);
+    }
+    if(isCircleWiner)
+    {
+        printCircleWin(window);
+    }
+    if(isTieDetected)
+    {
+        printTie(window);
+    }
+
     window.display();
     bool isClicked{false};
     while (window.isOpen())
     {
         while (window.pollEvent(event)) {
-            std::cout << "tuuu";
             if (event.type == sf::Event::MouseButtonPressed &&
                 (event.mouseButton.x>=100 && event.mouseButton.x<=500 && event.mouseButton.y>=150 && event.mouseButton.y<=450) )
             {
@@ -190,6 +208,32 @@ void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
             break;
         }
     }
+}
 
+void TicTacToeGame::printCrossWin(sf::RenderWindow& window) {
+    font.loadFromFile("../Fonts/Raleway-Black.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setString(crossWinText);
+    text.setPosition(170,230);
+    window.draw(text);
+}
+
+void TicTacToeGame::printCircleWin(sf::RenderWindow &window) {
+    font.loadFromFile("../Fonts/Raleway-Black.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setString(circleWinText);
+    text.setPosition(170,230);
+    window.draw(text);
+}
+
+void TicTacToeGame::printTie(sf::RenderWindow &window) {
+    font.loadFromFile("../Fonts/Raleway-Black.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setString(tieText);
+    text.setPosition(170,230);
+    window.draw(text);
 }
 

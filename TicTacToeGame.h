@@ -21,6 +21,9 @@ private:
     bool isCircleWin(int j);
     bool isTie();
     void playAgain(sf::RenderWindow& window, sf::Event &event);
+    void printCrossWin(sf::RenderWindow& window);
+    void printCircleWin(sf::RenderWindow& window);
+    void printTie(sf::RenderWindow& window);
 
     sf::Texture texture;
     sf::Texture texture1;
@@ -33,6 +36,9 @@ private:
     sf::Sprite sprite2;
     sf::Sprite sprite3;
     sf::Sprite sprite4;
+
+    sf::Font font;
+    sf::Text text;
 
     std::vector<std::vector<int>> indexesForWinner
             {{0, 1, 2},
@@ -49,5 +55,11 @@ private:
 
     bool isPlayerXturn{true};
     bool isWinner{false};
+    bool isCrossWiner{false};
+    bool isCircleWiner{false};
+    bool isTieDetected{false};
+    std::string crossWinText {"Cross Win!\nPlay Again"};
+    std::string circleWinText {"Circle Win!\nPlay Again"};
+    std::string tieText {"        Tie!\nPlay Again"};
 };
 #endif //SECTOR_H_TICTACTOEGAME_H
