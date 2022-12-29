@@ -19,6 +19,7 @@ private:
     void crossWin(int i, int j);
     bool isCrossWin(int j);
     bool isCircleWin(int j);
+    bool isTie();
     void playAgain(sf::RenderWindow& window, sf::Event &event);
 
     sf::Texture texture;

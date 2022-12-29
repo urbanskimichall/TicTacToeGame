@@ -71,6 +71,13 @@ void TicTacToeGame::runGame(sf::Event &event, sf::RenderWindow& window) {
                 initSectors();
             }
         }
+        if(isTie())
+        {
+            drawGameBoard(window);
+            playAgain(window, event);
+            initPredefinedSectors();
+            initSectors();
+        }
     }
 }
 
@@ -147,6 +154,17 @@ bool TicTacToeGame::isCircleWin(int j) {
            sectors[indexesForWinner[j][2]].state == SectorState::CIRCLE;
 }
 
+bool TicTacToeGame::isTie() {
+    for(auto [key,value] : sectors)
+    {
+        if(value.state == SectorState::EMPTY)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
 
     sf::RectangleShape playAgainButton;
@@ -174,3 +192,4 @@ void TicTacToeGame::playAgain(sf::RenderWindow& window, sf::Event &event) {
     }
 
 }
+
